@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Birthday Surprise! ✨</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&family=Pacifico&family=Luckiest+Guy&display=swap" rel="stylesheet">
+    <style>
+        /* ==================================== */
+        /* GLOBAL STYLES & COLOR PALETTE */
+        /* ==================================== */
+        :root {
+            /* Main Page Background */
+            --bg-color-main-dark: #28424E;
+
+            /* Landing Page Colors */
+            --bg-color-landing-light: #FF69B4;
+            --bg-color-landing-dark: #9932CC;
+
+            /* Text Colors */
+            --text-color-happy: #FFC0CB;
+            --text-color-happy-glow: #FFFACD;
+            --text-color-birthday: #FFFFFF;
+            --text-color-shadow: #1A303A;
+            --text-color-message: #EEEEEE;
+            --text-color-primary: #FFD700; /* New primary color for buttons/highlights */
+
+            /* Cake, Balloons, Confetti Colors */
+            --cake-frosting: #FFB6C1;
+            --cake-base: #F0E68C;
+            --candle-flame: #FFD700;
+            --candle-wax: #FFFFFF;
+            --balloon-color-yellow: #FFD700;
+            --balloon-color-pink: #FF69B4;
+            --balloon-color-teal: #40E0D0;
+            --confetti-color1: #FFD700;
+            --confetti-color2: #FF69B4;
+            --confetti-color3: #FFFFFF;
+            --confetti-color4: #40E0D0;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            position: relative;
+            background-color: var(--bg-color-landing-dark);
+            transition: background-color 1s ease-in-out;
+            /* Crucial for 3D effects on all pages */
+            perspective: 1000px; 
+        }
+
+        /* ==================================== */
+        /* PAGE 1: LANDING PAGE STYLES */
+        /* ==================================== */
+        #landing-page {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--bg-color-landing-light), var(--bg-color-landing-dark));
+            color: white;
+            transition: opacity 1s ease-out;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+        
+        .landing-container {
+            text-align: center;
+            padding: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 0 10px rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            animation: scaleIn 1.5s ease-out;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes scaleIn { from { transform: scale(0.8) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+        .landing-container h2 { font-size: 3em; margin-bottom: 30px; text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); letter-spacing: 2px; animation: floatText 3s ease-in-out infinite alternate; transform: translateZ(20px); }
+        @keyframes floatText { 0% { transform: translateY(0px) translateZ(20px); } 100% { transform: translateY(-10px) translateZ(20px); } }
+        .cta-button { display: inline-block; padding: 18px 40px; font-size: 1.8em; font-weight: 700; color: var(--bg-color-landing-dark); background-color: var(--text-color-primary); border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; position: relative; transform: translateZ(10px); overflow: hidden; }
+        .cta-button:hover { transform: translateY(-5px) scale(1.05) translateZ(10px); box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4); color: white; background: linear-gradient(45deg, var(--text-color-primary), #FFA500); }
+        .cta-button:active { transform: translateY(-2px) scale(1) translateZ(10px); box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); }
+        .confetti-landing { position: absolute; width: 8px; height: 8px; background-color: var(--confetti-color1); opacity: 0; border-radius: 50%; animation: fallLanding linear infinite; z-index: 101; }
+        .confetti-landing:nth-child(2n) { background-color: var(--confetti-color2); }
+        .confetti-landing:nth-child(3n) { background-color: var(--confetti-color3); }
+        @keyframes fallLanding { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
+        
+        /* New button style for page 2 */
+        .next-page-button { margin-top: 40px; padding: 15px 35px; font-size: 1.5em; background-color: var(--text-color-primary); color: var(--bg-color-main-dark); font-weight: 700; border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; transform: translateZ(10px); }
+        .next-page-button:hover { transform: translateY(-3px) scale(1.03) translateZ(10px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); }
+        .next-page-button:active { transform: translateY(0) scale(1) translateZ(10px); box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2); }
+
+
+        /* ==================================== */
+        /* PAGE 2: MAIN BIRTHDAY STYLES */
+        /* ==================================== */
+        #main-birthday-content {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #main-birthday-content.revealed {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .main-container {
+            text-align: center;
+            padding: 50px 70px;
+            background-color: rgba(255, 255, 255, 0.15);
+            border-radius: 40px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            max-width: 800px;
+            width: 90%;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 2s ease-out;
+            position: relative;
+            transform-style: preserve-3d;
+            border: 2px solid white;
+            z-index: 30;
+            margin: auto;
+        }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(40px) scale(0.9) translateZ(0); } to { transform: translateY(0) scale(1) translateZ(0); } }
+        
+        .happy-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.5em;
+            color: var(--text-color-happy);
+            margin: 0;
+            text-shadow: 
+                2px 2px 3px var(--text-color-shadow),
+                0 0 8px var(--text-color-happy-glow);
+            transform: translateZ(10px);
+            line-height: 0.8;
+            letter-spacing: 1px;
+        }
+
+        .birthday-text { font-family: 'Luckiest Guy', cursive; font-size: 6em; color: var(--text-color-birthday); margin: 0; text-shadow: -3px -3px 0 var(--text-color-shadow), -6px -6px 0 var(--text-color-shadow), -9px -9px 0 var(--text-color-shadow), 0 0 15px rgba(255, 255, 255, 0.7); letter-spacing: 3px; transform: translateZ(20px); animation: pulseText 2s infinite alternate ease-in-out; }
+        @keyframes pulseText { 0% { transform: scale(1) translateZ(20px); } 50% { transform: scale(1.02) translateZ(25px); } 100% { transform: scale(1) translateZ(20px); } }
+        .message { font-size: 1.5em; margin-top: 30px; color: var(--text-color-message); line-height: 1.6; font-weight: 300; max-width: 600px; margin-left: auto; margin-right: auto; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); animation: slideInUp 2.5s ease-out; transform: translateZ(5px); }
+        @keyframes slideInUp { from { opacity: 0; transform: translateY(50px) translateZ(5px); } to { transform: translateY(0) translateZ(5px); } }
+
+        /* Cake, Balloons, Confetti and Hat Styles (Original, retained) */
+        .cake-container { position: absolute; left: -80px; bottom: -90px; width: 250px; height: 250px; transform: translateZ(30px) rotateY(15deg) rotateX(5deg); animation: floatCake 4s ease-in-out infinite alternate; filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.4)); z-index: 20; }
+        @keyframes floatCake { 0% { transform: translateY(0px) translateZ(30px) rotateY(15deg) rotateX(5deg); } 50% { transform: translateY(-10px) translateZ(35px) rotateY(15deg) rotateX(5deg); } 100% { transform: translateY(0px) translateZ(30px) rotateY(15deg) rotateX(5deg); } }
+        .cake-layer { fill: var(--cake-base); stroke: #8B4513; stroke-width: 2; }
+        .frosting { fill: var(--cake-frosting); stroke: #CD5C5C; stroke-width: 2; }
+        .drip { fill: var(--cake-frosting); }
+        .candle-base { fill: var(--candle-wax); }
+        .candle-flame { fill: var(--candle-flame); }
+        .candle-flame-glow { fill: #FFEA00; }
+        .cherry { fill: #DC143C; stroke: #8B0000; stroke-width: 1; }
+        .static-balloon { position: absolute; width: 120px; height: 150px; border-radius: 80% 80% 70% 70%; background: var(--balloon-color-yellow); box-shadow: inset -15px -15px 0 rgba(0, 0, 0, 0.2), 5px 5px 10px rgba(0, 0, 0, 0.3); z-index: 10; opacity: 0.9; filter: brightness(1.1); transform-style: preserve-3d; transform: translateZ(15px) rotateZ(5deg); animation: floatStaticBalloon 6s ease-in-out infinite alternate; }
+        .static-balloon::before { content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 10px solid currentColor; filter: brightness(0.8); }
+        .static-balloon::after { content: ''; position: absolute; bottom: -80px; left: 50%; width: 2px; height: 70px; background: rgba(255, 255, 255, 0.3); transform: translateX(-50%); }
+        .static-balloon.top-left { top: 20px; left: 20px; background: var(--balloon-color-teal); transform: translateZ(20px) rotateZ(-10deg) rotateY(10deg); animation-delay: 0.5s; --static-balloon-transform-base: translateZ(20px) rotateZ(-10deg) rotateY(10deg); }
+        .static-balloon.top-right { top: 50px; right: 50px; background: var(--balloon-color-pink); transform: translateZ(10px) rotateZ(8deg) rotateY(-8deg); animation-delay: 1.5s; --static-balloon-transform-base: translateZ(10px) rotateZ(8deg) rotateY(-8deg); }
+        .static-balloon.bottom-right { bottom: 30px; right: -20px; background: var(--balloon-color-yellow); transform: translateZ(25px) rotateZ(15deg) rotateY(-5deg); animation-delay: 2.5s; --static-balloon-transform-base: translateZ(25px) rotateZ(15deg) rotateY(-5deg); }
+        .static-balloon.bottom-left { bottom: -10px; left: -50px; background: var(--balloon-color-pink); transform: translateZ(5px) rotateZ(-12deg) rotateY(12deg); animation-delay: 0s; --static-balloon-transform-base: translateZ(5px) rotateZ(-12deg) rotateY(12deg); }
+        @keyframes floatStaticBalloon { 0% { transform: translateY(0px) var(--static-balloon-transform-base); } 50% { transform: translateY(-15px) var(--static-balloon-transform-base); } 100% { transform: translateY(0px) var(--static-balloon-transform-base); } }
+        .confetti { position: absolute; width: 15px; height: 5px; background-color: var(--confetti-color1); opacity: 0; border-radius: 2px; animation: fall linear infinite; filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.4)); transform-style: preserve-3d; backface-visibility: hidden; z-index: 40; }
+        .confetti:nth-child(2n) { background-color: var(--confetti-color2); }
+        .confetti:nth-child(3n) { background-color: var(--confetti-color3); }
+        .confetti:nth-child(4n) { background-color: var(--confetti-color4); }
+        @keyframes fall { 0% { transform: translateY(-10vh) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(0.8); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(100vh) rotateX(360deg) rotateY(180deg) rotateZ(720deg) scale(1.2); opacity: 0; } }
+        .party-hat { position: absolute; width: 80px; height: 0; border-left: 40px solid transparent; border-right: 40px solid transparent; border-bottom: 100px solid #ADD8E6; border-radius: 5px; z-index: 15; transform-origin: bottom center; filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.3)); animation: floatHat 5s ease-in-out infinite alternate; transform-style: preserve-3d; }
+        .party-hat::before { content: ''; position: absolute; width: 100%; height: 20px; background: repeating-linear-gradient(90deg, #ADD8E6 0%, #ADD8E6 20%, #B0C4DE 20%, #B0C4DE 40%); bottom: -20px; left: -40px; border-radius: 0 0 50px 50px / 0 0 10px 10px; transform: translateZ(1px); }
+        .party-hat.hat1 { top: 10px; left: 180px; transform: translateZ(15px) rotateZ(10deg) rotateY(5deg); animation-delay: 0.8s; --hat-transform-base: translateZ(15px) rotateZ(10deg) rotateY(5deg); }
+        .party-hat.hat2 { bottom: 50px; right: 150px; transform: translateZ(25px) rotateZ(-20deg) rotateY(-8deg); animation-delay: 1.5s; --hat-transform-base: translateZ(25px) rotateZ(-20deg) rotateY(-8deg); }
+        @keyframes floatHat { 0% { transform: translateY(0px) var(--hat-transform-base); } 50% { transform: translateY(-10px) var(--hat-transform-base); } 100% { transform: translateY(0px) var(--hat-transform-base); } }
+
+        /* ==================================== */
+        /* PAGE 3: PHOTO GALLERY STYLES (NEW) */
+        /* ==================================== */
+        #photo-gallery-page {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--bg-color-main-dark);
+            z-index: 1; /* Lower Z-index initially */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s ease-in, transform 1s ease-in;
+            transform: translateZ(-100px); /* Start further away */
+            transform-style: preserve-3d;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #photo-gallery-page.revealed {
+            opacity: 1;
+            pointer-events: all;
+            z-index: 50; /* Bring to front */
+            transform: translateZ(0); /* Bring to normal plane */
+        }
+        
+        .gallery-header {
+            font-family: 'Pacifico', cursive;
+            font-size: 3em;
+            color: var(--text-color-primary);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+            transform: translateZ(10px);
+            animation: textWiggle 2s infinite alternate;
+        }
+
+        @keyframes textWiggle {
+            0% { transform: scale(1) rotate(0deg) translateZ(10px); }
+            100% { transform: scale(1.05) rotate(1deg) translateZ(10px); }
+        }
+
+        .photo-grid {
+            display: flex;
+            gap: 50px;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            max-width: 1000px;
+            width: 90%;
+            margin: auto;
+            transform-style: preserve-3d;
+        }
+
+        .photo-card {
+            width: 250px;
+            height: 250px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-radius: 15px;
+            cursor: pointer;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+            animation: cardFloat 5s infinite alternate ease-in-out;
+            margin-bottom: 20px; /* For mobile spacing */
+        }
+
+        .photo-card:nth-child(1) { transform: rotateY(-15deg) translateZ(20px); animation-delay: 0s; }
+        .photo-card:nth-child(2) { transform: rotateY(15deg) translateZ(20px); animation-delay: 2.5s; }
+
+        .photo-card:hover {
+            transform: rotateY(0deg) translateZ(50px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(255, 215, 0, 0.5);
+        }
+        
+        .photo-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: white;
+            border: 5px solid var(--text-color-primary);
+        }
+
+        .card-front img, .card-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-back {
+            transform: rotateY(180deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2em;
+            color: var(--bg-color-main-dark);
+            text-align: center;
+            padding: 10px;
+            background-color: var(--text-color-happy);
+        }
+        
+        @keyframes cardFloat {
+            0% { transform: translateY(0px) rotateY(var(--card-rotate-y, 0deg)) translateZ(20px); }
+            50% { transform: translateY(-10px) rotateY(var(--card-rotate-y, 0deg)) translateZ(25px); }
+            100% { transform: translateY(0px) rotateY(var(--card-rotate-y, 0deg)) translateZ(20px); }
+        }
+        
+        .photo-card:nth-child(1) { --card-rotate-y: -15deg; }
+        .photo-card:nth-child(2) { --card-rotate-y: 15deg; }
+
+        /* New Confetti Animation for Page 3 */
+        .confetti-gallery {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: var(--confetti-color1);
+            opacity: 0;
+            border-radius: 50%;
+            animation: burstAndFall linear infinite;
+            z-index: 55;
+            transform-style: preserve-3d;
+        }
+        .confetti-gallery:nth-child(2n) { background-color: var(--confetti-color2); }
+        .confetti-gallery:nth-child(3n) { background-color: var(--confetti-color3); }
+        .confetti-gallery:nth-child(4n) { background-color: var(--confetti-color4); }
+
+        @keyframes burstAndFall {
+            0% { transform: translateY(-10vh) scale(0.5) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; transform: translateY(0) scale(1) rotate(45deg); }
+            100% { transform: translateY(100vh) scale(0.5) rotate(360deg); opacity: 0; }
+        }
+
+
+        /* Responsive adjustments (Original, retained) */
+        @media (max-width: 768px) {
+            .landing-container h2 { font-size: 2em; }
+            .cta-button { font-size: 1.5em; padding: 15px 30px; }
+            .landing-container { margin: 20px; padding: 30px; }
+            #main-birthday-content { padding: 10px; }
+            .main-container { padding: 25px 30px; margin: 20px auto; }
+            .happy-text { font-size: 1.8em; }
+            .birthday-text { font-size: 4em; letter-spacing: 2px; }
+            .message { font-size: 1em; padding: 0 5px; }
+            .cake-container { 
+                width: 150px; height: 150px; 
+                left: -40px; 
+                bottom: -70px;
+                transform: translateZ(20px) rotateY(10deg) rotateX(3deg); 
+            }
+            .static-balloon { width: 80px; height: 100px; }
+            .static-balloon.top-left { top: 5px; left: 5px; }
+            .static-balloon.top-right { top: 20px; right: 20px; }
+            .static-balloon.bottom-right { bottom: 10px; right: -10px; }
+            .static-balloon.bottom-left { bottom: -5px; left: -30px; }
+            .party-hat { width: 60px; border-left: 30px solid transparent; border-right: 30px solid transparent; border-bottom: 75px solid #ADD8E6; }
+            .party-hat::before { bottom: -15px; left: -30px; height: 15px; }
+            .party-hat.hat1 { top: 0px; left: 80px; }
+            .party-hat.hat2 { bottom: 20px; right: 80px; }
+
+            /* Responsive for Photo Gallery */
+            .photo-grid {
+                gap: 20px;
+            }
+            .photo-card {
+                width: 90%; /* Make cards take up most of the width */
+                height: 300px; /* Taller on mobile */
+                max-width: 300px;
+            }
+            .gallery-header {
+                font-size: 2em;
+            }
+            .next-page-button {
+                font-size: 1.2em;
+                padding: 12px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="landing-page">
+        <div class="landing-container">
+            <h2>It's A Very Special Day!</h2>
+            <button type="button" class="cta-button" onclick="revealBirthday()">
+                Click Here to Reveal! ✨
+            </button>
+        </div>
+    </div>
+
+    <div id="main-birthday-content">
+        
+        <div class="static-balloon top-left"></div>
+        <div class="static-balloon top-right"></div>
+        <div class="static-balloon bottom-right"></div>
+        <div class="static-balloon bottom-left"></div>
+
+        <div class="party-hat hat1"></div>
+        <div class="party-hat hat2"></div>
+
+        <div class="main-container"> 
+            
+            <div class="cake-container">
+                <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                    <ellipse class="cake-layer" cx="100" cy="120" rx="80" ry="30"/>
+                    <rect class="cake-layer" x="20" y="80" width="160" height="40" rx="5" ry="5"/>
+                    <path class="cake-layer" d="M20 80 A80 30 0 0 1 180 80 L180 120 A80 30 0 0 1 20 120 Z"/>
+                    <ellipse class="frosting" cx="100" cy="80" rx="80" ry="30"/>
+                    <path class="drip" d="M20 120 C30 130 40 115 50 120 S60 130 70 120 S80 115 90 120 S100 130 110 120 S120 115 130 120 S140 130 150 120 S160 115 170 120 V80 H20 Z" />
+                    <rect class="candle-base" x="85" y="50" width="10" height="25" rx="2" ry="2"/>
+                    <rect class="candle-base" x="105" y="55" width="10" height="20" rx="2" ry="2"/>
+                    <rect class="candle-base" x="65" y="55" width="10" height="20" rx="2" ry="2"/>
+                    <path class="candle-flame" d="M88 45 C89 42 91 42 92 45 C91 48 89 48 88 45 Z"/>
+                    <path class="candle-flame-glow" d="M88 45 C89 42 91 42 92 45 C91 48 89 48 88 45 Z" transform="scale(0.8) translate(18, -1)" opacity="0.7"/>
+                    <path class="candle-flame" d="M108 50 C109 47 111 47 112 50 C111 53 109 53 108 50 Z"/>
+                    <path class="candle-flame-glow" d="M108 50 C109 47 111 47 112 50 C111 53 109 53 108 50 Z" transform="scale(0.8) translate(22, 0)" opacity="0.7"/>
+                    <path class="candle-flame" d="M68 50 C69 47 71 47 72 50 C71 53 69 53 68 50 Z"/>
+                    <path class="candle-flame-glow" d="M68 50 C69 47 71 47 72 50 C71 53 69 53 68 50 Z" transform="scale(0.8) translate(14, 0)" opacity="0.7"/>
+                    <circle class="cherry" cx="40" cy="70" r="4"/>
+                    <circle class="cherry" cx="160" cy="70" r="4"/>
+                    <circle class="cherry" cx="100" cy="65" r="4"/>
+                </svg>
+            </div>
+
+            <div class="birthday-header">
+                <span class="happy-text">HAPPY</span>
+                <span class="birthday-text">BIRTHDAY BAUAA</span>
+            </div>
+            <p class="message">
+                Wishing a very happy Birthday to my sweetest darling!<br>
+                Every moment with you is a gift, and I cherish you more than words can say.<br>
+                May your day be as beautiful and wonderful as you are, filled with joy and laughter.<br>
+                You mean the world to me, and I love you endlessly! 💜❤🧿
+            </p>
+
+            <button type="button" class="next-page-button" onclick="revealPhotoGallery()">
+                Click for a Special Surprise! ✨
+            </button>
+        </div>
+    </div>
+    
+    <div id="photo-gallery-page">
+        
+        <h2 class="gallery-header">Our Story in Frames! 📸</h2>
+        
+        <div class="photo-grid">
+            
+            <div class="photo-card" onclick="flipCard(this)">
+                <div class="card-face card-front">
+                    <img src="1000024715.jpg" alt="A lovely couple in Ghibli art style, holding hands.">
+                </div>
+                <div class="card-face card-back">
+                    "This is the first look at our animated adventure together!"
+                </div>
+            </div>
+            
+            <div class="photo-card" onclick="flipCard(this)">
+                <div class="card-face card-front">
+                    <img src="1000024719.jpg" alt="A lovely couple in Ghibli art style, with the man's arms crossed.">
+                </div>
+                <div class="card-face card-back">
+                    "Even in a different style, our love shines through! I love you!"
+                </div>
+            </div>
+            
+        </div>
+        
+    </div>
+
+
+    <script>
+        // Store image filenames in an array for reference
+        const imageFiles = ["1000024715.jpg", "1000024719.jpg"];
+
+        function revealBirthday() {
+            const landingPage = document.getElementById('landing-page');
+            const mainContent = document.getElementById('main-birthday-content');
+            const body = document.body;
+
+            landingPage.style.opacity = '0';
+            body.style.backgroundColor = 'var(--bg-color-main-dark)';
+
+            setTimeout(() => {
+                landingPage.style.display = 'none'; 
+                mainContent.classList.add('revealed'); 
+                // Generate confetti for the main birthday page
+                generateConfetti(80, 'confetti', 8); 
+            }, 1000);
+        }
+        
+        function revealPhotoGallery() {
+            const mainContent = document.getElementById('main-birthday-content');
+            const photoGallery = document.getElementById('photo-gallery-page');
+            const body = document.body;
+            
+            // Fade out the main birthday page
+            mainContent.style.opacity = '0';
+            mainContent.style.pointerEvents = 'none';
+            
+            // Generate burst confetti for the gallery reveal
+            generateConfetti(100, 'confetti-gallery', 10, true); 
+
+            // Wait for fade out and then reveal the gallery
+            setTimeout(() => {
+                body.style.backgroundColor = 'var(--bg-color-main-dark)'; 
+                photoGallery.classList.add('revealed');
+            }, 500);
+        }
+
+        function flipCard(cardElement) {
+            // Toggle the 'flipped' class for the 3D rotation effect
+            cardElement.classList.toggle('flipped');
+        }
+
+        function generateConfetti(count, className, maxDelay = 8, isBurst = false) {
+            const container = document.body; // Use body for full screen confetti
+            const existingConfetti = document.querySelectorAll(.${className});
+            existingConfetti.forEach(c => c.remove()); // Clear previous confetti
+
+            for (let i = 0; i < count; i++) {
+                const confetti = document.createElement('div');
+                confetti.classList.add(className);
+
+                const x = Math.random() * 100;
+                const size = Math.random() * 10 + 5;
+                const duration = Math.random() * 6 + 6;
+                const delay = Math.random() * maxDelay;
+
+                confetti.style.left = ${x}vw;
+                confetti.style.width = ${size * 1.5}px;
+                confetti.style.height = ${size * 0.5}px;
+                confetti.style.animationDuration = ${duration}s;
+                confetti.style.animationDelay = ${delay}s;
+                confetti.style.transform = rotate(${Math.random() * 360}deg) translateZ(${Math.random() * 50 - 25}px);
+                
+                if (isBurst) {
+                     // For burst effect, start from the center and spread out
+                    const startX = 50 + (Math.random() - 0.5) * 20; // Start near center
+                    const startY = 50 + (Math.random() - 0.5) * 20; // Start near center
+                    confetti.style.setProperty('--initial-x', ${startX}vw);
+                    confetti.style.setProperty('--initial-y', ${startY}vh);
+                    
+                    // A different approach for the burst confetti
+                    confetti.style.animation = burstAndFall ${duration}s linear ${delay}s infinite;
+                }
+
+                container.appendChild(confetti);
+            }
+        }
+        
+        // Initial confetti for the landing page
+        generateConfetti(30, 'confetti-landing', 2);
+    </script>
+</body>
+</html>
