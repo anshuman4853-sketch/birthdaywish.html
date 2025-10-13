@@ -42,35 +42,40 @@
 
         body {
             margin: 0;
-            min-height: 100vh;
+            /* Ensure the body covers the entire viewport */
+            min-height: 100vh; 
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
             position: relative;
             background-color: var(--bg-color-landing-dark);
             transition: background-color 1s ease-in-out;
-            perspective: 1000px; 
+            perspective: 1000px;
         }
-
-        /* ==================================== */
-        /* PAGE 1: LANDING PAGE STYLES */
-        /* ==================================== */
-        #landing-page {
+        
+        /* Prevent excessive scrolling on smaller devices */
+        #landing-page, #main-birthday-content {
+            box-sizing: border-box;
             width: 100%;
             height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
+        }
+        
+        /* ==================================== */
+        /* PAGE 1: LANDING PAGE STYLES */
+        /* ==================================== */
+        #landing-page {
             background: linear-gradient(135deg, var(--bg-color-landing-light), var(--bg-color-landing-dark));
             color: white;
             transition: opacity 1s ease-out;
-            position: absolute;
-            top: 0;
-            left: 0;
             z-index: 100;
         }
         
@@ -83,6 +88,7 @@
             backdrop-filter: blur(10px);
             animation: scaleIn 1.5s ease-out;
             transform-style: preserve-3d;
+            max-width: 90%; /* Ensure it fits mobile screens */
         }
 
         @keyframes scaleIn { from { transform: scale(0.8) translateY(20px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
@@ -96,8 +102,8 @@
         .confetti-landing:nth-child(3n) { background-color: var(--confetti-color3); }
         @keyframes fallLanding { 0% { transform: translateY(-10vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 100% { transform: translateY(100vh) rotate(360deg); opacity: 0; } }
         
-        /* NOTE: The .next-page-button style is now unused but kept for integrity */
-        .next-page-button { margin-top: 40px; padding: 15px 35px; font-size: 1.5em; background-color: var(--text-color-primary); color: var(--bg-color-main-dark); font-weight: 700; border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; transform: translateZ(10px); display: none; }
+        /* Hidden button for the now-removed 3rd page */
+        .next-page-button { display: none; }
 
 
         /* ==================================== */
@@ -107,19 +113,9 @@
             opacity: 0;
             pointer-events: none;
             transition: opacity 1s ease-in;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             z-index: 5;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
             transform-style: preserve-3d;
             padding: 20px;
-            box-sizing: border-box;
         }
 
         #main-birthday-content.revealed {
@@ -141,7 +137,8 @@
             transform-style: preserve-3d;
             border: 2px solid white;
             z-index: 30;
-            margin: auto;
+            /* Center the box */
+            margin: auto; 
         }
         
         @keyframes fadeIn { from { opacity: 0; transform: translateY(40px) scale(0.9) translateZ(0); } to { transform: translateY(0) scale(1) translateZ(0); } }
@@ -164,9 +161,38 @@
         .message { font-size: 1.5em; margin-top: 30px; color: var(--text-color-message); line-height: 1.6; font-weight: 300; max-width: 600px; margin-left: auto; margin-right: auto; text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4); animation: slideInUp 2.5s ease-out; transform: translateZ(5px); }
         @keyframes slideInUp { from { opacity: 0; transform: translateY(50px) translateZ(5px); } to { transform: translateY(0) translateZ(5px); } }
 
-        /* Cake, Balloons, Confetti and Hat Styles (Original, retained) */
-        .cake-container { position: absolute; left: -80px; bottom: -90px; width: 250px; height: 250px; transform: translateZ(30px) rotateY(15deg) rotateX(5deg); animation: floatCake 4s ease-in-out infinite alternate; filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.4)); z-index: 20; }
-        @keyframes floatCake { 0% { transform: translateY(0px) translateZ(30px) rotateY(15deg) rotateX(5deg); } 50% { transform: translateY(-10px) translateZ(35px) rotateY(15deg) rotateX(5deg); } 100% { transform: translateY(0px) translateZ(30px) rotateY(15deg) rotateX(5deg); } }
+        /* --- CAKE POSITION FIX: Use relative positioning --- */
+        .cake-container { 
+            position: absolute;
+            /* Use percentages relative to the parent (.main-container) */
+            left: -10%; 
+            bottom: -15%; 
+            width: 25vw;
+            height: 25vw;
+            max-width: 250px;
+            max-height: 250px;
+            transform: translateZ(30px) rotateY(15deg) rotateX(5deg);
+            animation: floatCake 4s ease-in-out infinite alternate;
+            filter: drop-shadow(5px 5px 10px rgba(0, 0, 0, 0.4));
+            z-index: 20;
+        }
+        @media (max-width: 768px) {
+            .cake-container {
+                /* On small screens, move cake to the bottom left corner relative to the page */
+                left: -15vw; 
+                bottom: -15vh;
+                width: 40vw; 
+                height: 40vw;
+            }
+        }
+        
+        @keyframes floatCake { 
+            0% { transform: translateY(0px) translateZ(30px) rotateY(15deg) rotateX(5deg); } 
+            50% { transform: translateY(-10px) translateZ(35px) rotateY(15deg) rotateX(5deg); }
+            100% { transform: translateY(0px) translateZ(30px) rotateY(15deg) rotateX(5deg); } 
+        }
+
+        /* Cake SVG Styles (Kept original for consistency) */
         .cake-layer { fill: var(--cake-base); stroke: #8B4513; stroke-width: 2; }
         .frosting { fill: var(--cake-frosting); stroke: #CD5C5C; stroke-width: 2; }
         .drip { fill: var(--cake-frosting); }
@@ -174,26 +200,77 @@
         .candle-flame { fill: var(--candle-flame); }
         .candle-flame-glow { fill: #FFEA00; }
         .cherry { fill: #DC143C; stroke: #8B0000; stroke-width: 1; }
-        .static-balloon { position: absolute; width: 120px; height: 150px; border-radius: 80% 80% 70% 70%; background: var(--balloon-color-yellow); box-shadow: inset -15px -15px 0 rgba(0, 0, 0, 0.2), 5px 5px 10px rgba(0, 0, 0, 0.3); z-index: 10; opacity: 0.9; filter: brightness(1.1); transform-style: preserve-3d; transform: translateZ(15px) rotateZ(5deg); animation: floatStaticBalloon 6s ease-in-out infinite alternate; }
-        .static-balloon::before { content: ''; position: absolute; bottom: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 5px solid transparent; border-right: 5px solid transparent; border-top: 10px solid currentColor; filter: brightness(0.8); }
-        .static-balloon::after { content: ''; position: absolute; bottom: -80px; left: 50%; width: 2px; height: 70px; background: rgba(255, 255, 255, 0.3); transform: translateX(-50%); }
-        .static-balloon.top-left { top: 20px; left: 20px; background: var(--balloon-color-teal); transform: translateZ(20px) rotateZ(-10deg) rotateY(10deg); animation-delay: 0.5s; --static-balloon-transform-base: translateZ(20px) rotateZ(-10deg) rotateY(10deg); }
-        .static-balloon.top-right { top: 50px; right: 50px; background: var(--balloon-color-pink); transform: translateZ(10px) rotateZ(8deg) rotateY(-8deg); animation-delay: 1.5s; --static-balloon-transform-base: translateZ(10px) rotateZ(8deg) rotateY(-8deg); }
-        .static-balloon.bottom-right { bottom: 30px; right: -20px; background: var(--balloon-color-yellow); transform: translateZ(25px) rotateZ(15deg) rotateY(-5deg); animation-delay: 2.5s; --static-balloon-transform-base: translateZ(25px) rotateZ(15deg) rotateY(-5deg); }
-        .static-balloon.bottom-left { bottom: -10px; left: -50px; background: var(--balloon-color-pink); transform: translateZ(5px) rotateZ(-12deg) rotateY(12deg); animation-delay: 0s; --static-balloon-transform-base: translateZ(5px) rotateZ(-12deg) rotateY(12deg); }
-        @keyframes floatStaticBalloon { 0% { transform: translateY(0px) var(--static-balloon-transform-base); } 50% { transform: translateY(-15px) var(--static-balloon-transform-base); } 100% { transform: translateY(0px) var(--static-balloon-transform-base); } }
+
+        /* --- BALLOON POSITION FIX: Use V/W units and relative positioning --- */
+        .static-balloon { 
+            position: absolute; 
+            width: 15vw; 
+            height: 18vw; 
+            max-width: 120px;
+            max-height: 150px;
+            border-radius: 80% 80% 70% 70%; 
+            background: var(--balloon-color-yellow); 
+            box-shadow: inset -15px -15px 0 rgba(0, 0, 0, 0.2), 5px 5px 10px rgba(0, 0, 0, 0.3); 
+            z-index: 10; 
+            opacity: 0.9; 
+            filter: brightness(1.1); 
+            transform-style: preserve-3d; 
+            animation: floatStaticBalloon 6s ease-in-out infinite alternate;
+        }
+
+        .static-balloon.top-left { top: 5vh; left: 5vw; background: var(--balloon-color-teal); transform: translateZ(20px) rotateZ(-10deg) rotateY(10deg); animation-delay: 0.5s; --static-balloon-transform-base: translateZ(20px) rotateZ(-10deg) rotateY(10deg); }
+        .static-balloon.top-right { top: 8vh; right: 8vw; background: var(--balloon-color-pink); transform: translateZ(10px) rotateZ(8deg) rotateY(-8deg); animation-delay: 1.5s; --static-balloon-transform-base: translateZ(10px) rotateZ(8deg) rotateY(-8deg); }
+        .static-balloon.bottom-right { bottom: 5vh; right: 2vw; background: var(--balloon-color-yellow); transform: translateZ(25px) rotateZ(15deg) rotateY(-5deg); animation-delay: 2.5s; --static-balloon-transform-base: translateZ(25px) rotateZ(15deg) rotateY(-5deg); }
+        .static-balloon.bottom-left { bottom: 2vh; left: 2vw; background: var(--balloon-color-pink); transform: translateZ(5px) rotateZ(-12deg) rotateY(12deg); animation-delay: 0s; --static-balloon-transform-base: translateZ(5px) rotateZ(-12deg) rotateY(12deg); }
+
+        /* Small screen adjustments for balloons */
+        @media (max-width: 768px) {
+            .static-balloon { width: 25vw; height: 30vw; max-width: 80px; max-height: 100px; }
+            .static-balloon.top-right { top: 5vh; right: 5vw; }
+            .static-balloon.bottom-right { bottom: 5vh; right: 5vw; }
+        }
+
+        /* --- HAT POSITION FIX: Use V/W units and relative positioning --- */
+        .party-hat { 
+            position: absolute; 
+            width: 10vw; 
+            height: 0; 
+            border-left: 5vw solid transparent; 
+            border-right: 5vw solid transparent; 
+            border-bottom: 12vw solid #ADD8E6; 
+            max-width: 80px;
+            border-bottom-width: 100px;
+            border-left-width: 40px;
+            border-right-width: 40px;
+            border-bottom-width: 100px;
+            border-radius: 5px; 
+            z-index: 15; 
+            transform-origin: bottom center; 
+            filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.3)); 
+            animation: floatHat 5s ease-in-out infinite alternate; 
+            transform-style: preserve-3d;
+        }
+
+        .party-hat.hat1 { top: 5vh; left: 20vw; transform: translateZ(15px) rotateZ(10deg) rotateY(5deg); animation-delay: 0.8s; --hat-transform-base: translateZ(15px) rotateZ(10deg) rotateY(5deg); }
+        .party-hat.hat2 { bottom: 10vh; right: 15vw; transform: translateZ(25px) rotateZ(-20deg) rotateY(-8deg); animation-delay: 1.5s; --hat-transform-base: translateZ(25px) rotateZ(-20deg) rotateY(-8deg); }
+
+        @media (max-width: 768px) {
+            .party-hat { border-left-width: 30px; border-right-width: 30px; border-bottom-width: 75px; }
+            .party-hat::before { bottom: -15px; left: -30px; height: 15px; }
+            .party-hat.hat1 { top: 2vh; left: 10vw; }
+            .party-hat.hat2 { bottom: 5vh; right: 10vw; }
+        }
+        
+        /* Confetti styles are fine as they use viewport units (vh/vw) implicitly */
         .confetti { position: absolute; width: 15px; height: 5px; background-color: var(--confetti-color1); opacity: 0; border-radius: 2px; animation: fall linear infinite; filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.4)); transform-style: preserve-3d; backface-visibility: hidden; z-index: 40; }
         .confetti:nth-child(2n) { background-color: var(--confetti-color2); }
         .confetti:nth-child(3n) { background-color: var(--confetti-color3); }
         .confetti:nth-child(4n) { background-color: var(--confetti-color4); }
         @keyframes fall { 0% { transform: translateY(-10vh) rotateX(0deg) rotateY(0deg) rotateZ(0deg) scale(0.8); opacity: 0; } 10% { opacity: 1; } 100% { transform: translateY(100vh) rotateX(360deg) rotateY(180deg) rotateZ(720deg) scale(1.2); opacity: 0; } }
-        .party-hat { position: absolute; width: 80px; height: 0; border-left: 40px solid transparent; border-right: 40px solid transparent; border-bottom: 100px solid #ADD8E6; border-radius: 5px; z-index: 15; transform-origin: bottom center; filter: drop-shadow(3px 3px 5px rgba(0,0,0,0.3)); animation: floatHat 5s ease-in-out infinite alternate; transform-style: preserve-3d; }
-        .party-hat::before { content: ''; position: absolute; width: 100%; height: 20px; background: repeating-linear-gradient(90deg, #ADD8E6 0%, #ADD8E6 20%, #B0C4DE 20%, #B0C4DE 40%); bottom: -20px; left: -40px; border-radius: 0 0 50px 50px / 0 0 10px 10px; transform: translateZ(1px); }
-        .party-hat.hat1 { top: 10px; left: 180px; transform: translateZ(15px) rotateZ(10deg) rotateY(5deg); animation-delay: 0.8s; --hat-transform-base: translateZ(15px) rotateZ(10deg) rotateY(5deg); }
-        .party-hat.hat2 { bottom: 50px; right: 150px; transform: translateZ(25px) rotateZ(-20deg) rotateY(-8deg); animation-delay: 1.5s; --hat-transform-base: translateZ(25px) rotateZ(-20deg) rotateY(-8deg); }
+        @keyframes floatStaticBalloon { 0% { transform: translateY(0px) var(--static-balloon-transform-base); } 50% { transform: translateY(-15px) var(--static-balloon-transform-base); } 100% { transform: translateY(0px) var(--static-balloon-transform-base); } }
         @keyframes floatHat { 0% { transform: translateY(0px) var(--hat-transform-base); } 50% { transform: translateY(-10px) var(--hat-transform-base); } 100% { transform: translateY(0px) var(--hat-transform-base); } }
 
-        /* Responsive adjustments (Original, retained) */
+        /* Responsive adjustments (Text/Container) */
         @media (max-width: 768px) {
             .landing-container h2 { font-size: 2em; }
             .cta-button { font-size: 1.5em; padding: 15px 30px; }
@@ -203,26 +280,14 @@
             .happy-text { font-size: 1.8em; }
             .birthday-text { font-size: 4em; letter-spacing: 2px; }
             .message { font-size: 1em; padding: 0 5px; }
-            .cake-container { 
-                width: 150px; height: 150px; 
-                left: -40px; 
-                bottom: -70px;
-                transform: translateZ(20px) rotateY(10deg) rotateX(3deg); 
-            }
-            .static-balloon { width: 80px; height: 100px; }
-            .static-balloon.top-left { top: 5px; left: 5px; }
-            .static-balloon.top-right { top: 20px; right: 20px; }
-            .static-balloon.bottom-right { bottom: 10px; right: -10px; }
-            .static-balloon.bottom-left { bottom: -5px; left: -30px; }
-            .party-hat { width: 60px; border-left: 30px solid transparent; border-right: 30px solid transparent; border-bottom: 75px solid #ADD8E6; }
-            .party-hat::before { bottom: -15px; left: -30px; height: 15px; }
-            .party-hat.hat1 { top: 0px; left: 80px; }
-            .party-hat.hat2 { bottom: 20px; right: 80px; }
         }
     </style>
 </head>
 <body>
 
+    <!-- ==================================== -->
+    <!-- PAGE 1: LANDING PAGE -->
+    <!-- ==================================== -->
     <div id="landing-page">
         <div class="landing-container">
             <h2>It's A Very Special Day!</h2>
@@ -232,6 +297,9 @@
         </div>
     </div>
 
+    <!-- ==================================== -->
+    <!-- PAGE 2: MAIN BIRTHDAY WISH -->
+    <!-- ==================================== -->
     <div id="main-birthday-content">
         
         <div class="static-balloon top-left"></div>
@@ -277,7 +345,8 @@
                 You mean the world to me, and I love you endlessly! 💜❤️🧿
             </p>
 
-            </div>
+            <!-- REMOVED: Next Page Button -->
+        </div>
     </div>
     
     <script>
@@ -301,9 +370,9 @@
         }
         
         // REMOVED: revealPhotoGallery function
-
+        
+        // The flipCard function is no longer needed since the 3rd page is gone, but keeping it won't hurt.
         function flipCard(cardElement) {
-            // This function is no longer needed since the 3rd page is gone, but keeping it won't hurt.
             cardElement.classList.toggle('flipped');
         }
 
@@ -350,3 +419,4 @@
     </script>
 </body>
 </html>
+
